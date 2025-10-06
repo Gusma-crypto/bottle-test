@@ -1,18 +1,32 @@
  import { cacheWithSessionStorageDecorator } from "./index";
-
+import { PinataSDK } from "pinata-web3";
+import siteConfig from "@/config";
 import BottleImageType1 from "/images/bottles/1.png";
 import BottleImageType2 from "/images/bottles/2.png";
 import BottleImageType3 from "/images/bottles/3.png";
 
 import { Bottle } from "@/types";
 
+const pinata = new PinataSDK(siteConfig.pinata);
 // Todo
 export async function handleUpload (toStore: any[]){
- //Todo
+ 
+  const ipfsResults = await Promise.all(toStore.map(async(item)=>{
+    if(item instanceof File){
+      const upload =  await pinata.upload.file(item);
+      return upload.IpfsHash;
+    }else{
+      const upload = await pinata.upload.json({ content : item });
+      return upload.IpfsHash;
+    }
+  }));
+  console.log("storage successfull :", ipfsResults);
+  return ipfsResults;
 };
 
 export async function handleGetData (cid: string){
-  //Todo
+  const data = await pinata.gateways.get(cid);
+  return data;
 };
 
 export function getBottleImage(bottle: Bottle, isUnread = false) {

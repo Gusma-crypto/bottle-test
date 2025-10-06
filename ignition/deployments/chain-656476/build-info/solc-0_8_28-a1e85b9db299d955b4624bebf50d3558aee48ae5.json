@@ -1,0 +1,39 @@
+{
+  "_format": "hh3-sol-build-info-1",
+  "id": "solc-0_8_28-a1e85b9db299d955b4624bebf50d3558aee48ae5",
+  "solcVersion": "0.8.28",
+  "solcLongVersion": "0.8.28+commit.7893614a",
+  "userSourceNameMap": {
+    "contracts/DriftBottle.sol": "project/contracts/DriftBottle.sol"
+  },
+  "input": {
+    "language": "Solidity",
+    "settings": {
+      "evmVersion": "cancun",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "outputSelection": {
+        "*": {
+          "": [
+            "ast"
+          ],
+          "*": [
+            "abi",
+            "evm.bytecode",
+            "evm.deployedBytecode",
+            "evm.methodIdentifiers",
+            "metadata"
+          ]
+        }
+      },
+      "remappings": []
+    },
+    "sources": {
+      "project/contracts/DriftBottle.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.28;\r\n\r\ncontract DriftBottle {\r\n\r\n    struct BlobInfo {\r\n        string ipfsHash;     \r\n    }\r\n\r\n    struct BottleInfo {\r\n        uint256 id;\r\n        address from;\r\n        uint256 fromTime;\r\n        bool isOpen;\r\n        address to;\r\n        uint256 replyTime;    \r\n        BlobInfo[] msgs;              \r\n    }\r\n    \r\n    BottleInfo[] public allBottles;\r\n    uint256 public totalBottles;\r\n    \r\n    mapping(address => uint256[]) public bottleOwned;\r\n    mapping(uint256 => BottleInfo) public idToBottle;\r\n    \r\n    event BottleCreated(uint256 indexed bottleId, address indexed from);\r\n    event BottleReplied(uint256 indexed bottleId, address indexed to);    \r\n    \r\n    function createBottle(string[] memory ipfsHashs) external {\r\n        require(ipfsHashs.length > 0, \"Blob cannot be empty\");\r\n        uint256 _id = totalBottles + 1; \r\n        \r\n        BottleInfo storage newBottle = idToBottle[_id];\r\n        newBottle.id = _id;\r\n        newBottle.from = msg.sender;\r\n        newBottle.fromTime = block.timestamp;\r\n        newBottle.isOpen = false;\r\n        newBottle.to = address(0);\r\n        newBottle.replyTime = 0;\r\n        \r\n        for (uint256 i = 0; i < ipfsHashs.length; i++) {\r\n            newBottle.msgs.push(BlobInfo({ipfsHash: ipfsHashs[i]}));\r\n        }\r\n        \r\n        allBottles.push(newBottle);\r\n        bottleOwned[msg.sender].push(_id);      \t\t\r\n        totalBottles ++;        \r\n        \r\n        emit BottleCreated(_id, msg.sender);       \r\n    }\r\n    \r\n    function openAndReplyBottle(uint256 _id, string[] memory ipfsHashs) external {\r\n        require(ipfsHashs.length > 0, \"Blob cannot be empty\");\r\n        \r\n        BottleInfo storage bottle = idToBottle[_id];\r\n        require(bottle.isOpen == false, \"Bottle already opened\");\r\n        \r\n        for (uint256 i = 0; i < ipfsHashs.length; i++) {\r\n             bottle.msgs.push(BlobInfo({ipfsHash: ipfsHashs[i]}));\r\n        }\r\n        \r\n        bottle.isOpen = true;\r\n        bottle.to = msg.sender;\r\n        bottle.replyTime = block.timestamp;    \r\n        \r\n        uint256 index = _id-1;\r\n        allBottles[index] = bottle;\r\n        emit BottleReplied(_id, msg.sender);   \r\n    }\r\n    \r\n    function getAllBottles() external view returns (BottleInfo[] memory) {\r\n        return allBottles;\r\n    }  \r\n    \r\n    function getBottleMessages(uint256 _id) public view returns (BlobInfo[] memory){\r\n        return idToBottle[_id].msgs;    \r\n    }                    \r\n}"
+      }
+    }
+  }
+}
