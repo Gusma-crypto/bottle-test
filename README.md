@@ -35,3 +35,44 @@ Frontend digunakan untuk:
 ## 🌐 Network Deployment (EduChain Testnet)
 
 ### 📍 Smart Contract Address
+0x58F7650Ce59a6C759a9183b145495E680F618974
+
+
+---
+
+### 🔍 Block Explorer
+EduChain Blockscout:
+👉 https://edu-chain-testnet.blockscout.com/
+---
+
+### 🚰 Faucet (EduChain Testnet)
+Gunakan faucet ini untuk mendapatkan token testnet:
+
+👉 https://educhain-community-faucet.vercel.app/
+
+📌 Pastikan wallet sudah terhubung ke **EduChain Testnet**.
+
+---
+
+## 📜 Informasi Teknis
+
+- **Solidity Version**: `^0.8.28`
+- **License**: MIT
+- **Platform Latihan**: HackQuest.io
+- **Blockchain**: EduChain Testnet (EVM Compatible)
+- **Storage Pesan**: IPFS (hash disimpan on-chain)
+
+---
+
+## 🧠 Konsep Dasar
+
+Setiap botol berisi:
+- Pesan awal (IPFS hash)
+- Status botol (open / closed)
+- Balasan dari user lain
+- Timestamp pengiriman & balasan
+
+📌 Smart contract **tidak menyimpan teks pesan langsung**, hanya hash IPFS.
+
+---
+
