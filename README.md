@@ -1,3 +1,8 @@
+![GitHub stars](https://img.shields.io/github/stars/Gusma-crypto/zyfaDonasi)
+![GitHub license](https://img.shields.io/github/license/Gusma-crypto/zyfaDonasi)
+![Solidity](https://img.shields.io/badge/Solidity-^0.8.28-blue)
+![Status](https://img.shields.io/badge/Status-Active-success)
+
 # DriftBottle Smart Contract & Frontend
 
 DriftBottle adalah project latihan dari **HackQuest.io** yang mengimplementasikan konsep **“Message in a Bottle”** berbasis blockchain dan IPFS.
@@ -9,6 +14,8 @@ Project ini terdiri dari:
 - ⛓️ Deployment di **EduChain Testnet**
 
 ---
+## SC
+![UI Preview](https://github.com/Gusma-crypto/bottle-test/blob/main/sc/home.png)
 
 ## 🔗 Repository Terkait
 
