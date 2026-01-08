@@ -76,3 +76,6 @@ Setiap botol berisi:
 
 ---
 
+## Donate
+- **eth/bnb/usdt**:0xe6C53A9EA5c9B5fef605Ea5b9Ce81e1C0b8bcB1c 
+
